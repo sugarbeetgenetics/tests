@@ -1,0 +1,22 @@
+#!/bin/bash
+#PBS -q clbigmem                    # Batchklasse: clexpress, clmedium, cllong, clbigmem   
+#PBS -b 1                          # Anzahl der Knoten (hier: 1 Knoten) 
+#PBS -l cpunum_job=32                # angeforderte Coreanzahl pro Knoten (max. 16, hier: 1 Core) 
+#PBS -l elapstim_req=200:00:00      # Rechenzeit (Walltime)
+#PBS -l cputim_job=6400:00:00        # CPU-Zeit (= wallclock time x cpunum_prc)
+#PBS -l memsz_job=250gb             # angeforderter Hauptspeicher pro Knoten (max. 128 GB bzw. 256GB (clbigmem))
+#PBS -N repeatmodeler_job                    # Jobname 
+#PBS -j o                          # Standard- und Fehlerausgabe in eine Datei
+#PBS -o repeatmodeler.out                 # Name der Standardausgabedatei
+#
+
+# Wechsel in das Arbeitsverzeichnis, aus dem qsub-Kommando abgesetzt wurde
+cd $PBS_O_WORKDIR
+
+/sfs/fs5/home-sh/suapp475/softwares/RepeatModeler-open-1.0.11/BuildDatabase -name gapfilled_TR520_repeatmodeler.DB -engine ncbi /sfs/fs2/work-sh1/suapp475/gapfiller/Standard_OutputGapfilledFinal_TR520.fa
+/sfs/fs5/home-sh/suapp475/softwares/RepeatModeler-open-1.0.11/RepeatModeler -database gapfilled_TR520_repeatmodeler.DB -engine ncbi -pa 32
+
+# Ausgabe von genutzten Ressourcen während der Berechnung
+/usr/bin/nqsII/qstat -f ${PBS_JOBID/0:/}  
+
+

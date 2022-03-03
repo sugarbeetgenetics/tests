@@ -1,0 +1,402 @@
+gzip /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/Scaffolds/CEstat/Scaffolds.ce/Scaffolds.sort.bedpe.sort.bedpe file:
+gzip -q -f /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/Scaffolds/CEstat/Scaffolds.ce/Scaffolds.sort.bedpe  ...
+
+----------------------------------------
+
+
+---------- Run bash command ----------
+
+convert sam to bam:
+samtools view -Sb /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/Scaffolds/CEstat/BWTaln/Scaffolds.mtp.sam  ...
+
+----------------------------------------
+
+
+---------- Run bash command ----------
+
+seqLengths:
+/home/planz/Downloads/Metassembler/bin/seqLengths /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/Scaffolds/Scaffolds.fa  ...
+
+----------------------------------------
+
+
+---------- Run bash command ----------
+
+cut seqLengths:
+cut -f 2 /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/Scaffolds/Scaffolds.fa.lengths  ...
+
+----------------------------------------
+
+
+---------- Run bash command ----------
+
+stats:
+/home/planz/Downloads/Metassembler/bin/stats /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/Scaffolds/Scaffolds.fa.lengths.2  ...
+
+----------------------------------------
+
+
+---------- Run bash command ----------
+
+Get contigs:
+/home/planz/Downloads/Metassembler/bin/splitscafffa /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/Scaffolds/Scaffolds.fa  ...
+
+Processed 14 scaffolds and 1219 contigs, printed 965 at least 200 bp long
+----------------------------------------
+
+
+---------- Run bash command ----------
+
+seqLengths:
+/home/planz/Downloads/Metassembler/bin/seqLengths /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/Scaffolds/Scaffolds.ctgs.fasta  ...
+
+----------------------------------------
+
+
+---------- Run bash command ----------
+
+cut seqLengths:
+cut -f 2 /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/Scaffolds/Scaffolds.ctgs.fasta.lengths  ...
+
+----------------------------------------
+
+
+---------- Run bash command ----------
+
+stats:
+/home/planz/Downloads/Metassembler/bin/stats /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/Scaffolds/Scaffolds.ctgs.fasta.lengths.2  ...
+
+----------------------------------------
+
+
+---------- Run bash command ----------
+
+Ncoords:
+/home/planz/Downloads/Metassembler/bin/Ncoords -N /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/BACs/BACs.fa -D /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/BACs/  ...
+
+----------------------------------------
+
+
+
+
+---- Computing CEstatistic for BACs ----
+
+---------- Run bash command ----------
+
+bowtie2-build:
+bowtie2-build /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/BACs/BACs.fa /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/BACs/CEstat/BWTaln/BACs.bld  ...
+
+----------------------------------------
+
+
+---------- Run bash command ----------
+
+bowtie2:
+bowtie2 -x /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/BACs/CEstat/BWTaln/BACs.bld -1 /media/planz/Hs1-2/Beet_translocation/UnorderedDataSet/Mate_pair_5kb_TR520/B1926_NoIndex_L006_R1_001.fastq.gz -2 /media/planz/Hs1-2/Beet_translocation/UnorderedDataSet/Mate_pair_5kb_TR520/B1926_NoIndex_L006_R2_001.fastq.gz --maxins 6000 --minins 3000 --rf --threads 18  ...
+
+----------------------------------------
+
+
+---------- Run bash command ----------
+
+mateAn -a sam:
+/home/planz/Downloads/Metassembler/bin/mateAn -A 2500 -B 6000 -p /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/BACs/CEstat/BACs.ce/BACs -e 0 -z 3 -q 20 -N 1 -f 6 -c 0.05 -n 30 -a /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/BACs/CEstat/BWTaln/BACs.mtp.sam  ...
+
+----------------------------------------
+
+
+---------- Run bash command ----------
+
+gzip /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/BACs/CEstat/BACs.ce/BACs.sort.bedpe.sort.bedpe file:
+gzip -q -f /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/BACs/CEstat/BACs.ce/BACs.sort.bedpe  ...
+
+----------------------------------------
+
+
+---------- Run bash command ----------
+
+convert sam to bam:
+samtools view -Sb /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/BACs/CEstat/BWTaln/BACs.mtp.sam  ...
+
+----------------------------------------
+
+
+---------- Run bash command ----------
+
+seqLengths:
+/home/planz/Downloads/Metassembler/bin/seqLengths /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/BACs/BACs.fa  ...
+
+----------------------------------------
+
+
+---------- Run bash command ----------
+
+cut seqLengths:
+cut -f 2 /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/BACs/BACs.fa.lengths  ...
+
+----------------------------------------
+
+
+---------- Run bash command ----------
+
+stats:
+/home/planz/Downloads/Metassembler/bin/stats /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/BACs/BACs.fa.lengths.2  ...
+
+----------------------------------------
+
+
+---------- Run bash command ----------
+
+Get contigs:
+/home/planz/Downloads/Metassembler/bin/splitscafffa /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/BACs/BACs.fa  ...
+
+Processed 4251 scaffolds and 4251 contigs, printed 2238 at least 200 bp long
+----------------------------------------
+
+
+---------- Run bash command ----------
+
+seqLengths:
+/home/planz/Downloads/Metassembler/bin/seqLengths /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/BACs/BACs.ctgs.fasta  ...
+
+----------------------------------------
+
+
+---------- Run bash command ----------
+
+cut seqLengths:
+cut -f 2 /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/BACs/BACs.ctgs.fasta.lengths  ...
+
+----------------------------------------
+
+
+---------- Run bash command ----------
+
+stats:
+/home/planz/Downloads/Metassembler/bin/stats /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/BACs/BACs.ctgs.fasta.lengths.2  ...
+
+----------------------------------------
+
+
+---------- Run bash command ----------
+
+scaffold stats:
+/home/planz/Downloads/Metassembler/bin/RepStats /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/BACs.Scaffolds_InitialScfStats /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/Scaffolds/Scaffolds.fa.lengths.stats /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/BACs/BACs.fa.lengths.stats  ...
+
+1: n=14 [4756, 505473] 208166.6 +/- 160034.9 sum=2914332 n50=333561 n50cnt=4 f=322410.67
+
+1: n=4251 [85, 72061] 472.1 +/- 3013.4 sum=2006804 n50=5606 n50cnt=43 f=19703.00
+
+----------------------------------------
+
+
+---------- Run bash command ----------
+
+contig stats:
+/home/planz/Downloads/Metassembler/bin/RepStats /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/BACs.Scaffolds_InitialCtgStats /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/Scaffolds/Scaffolds.ctgs.fasta.lengths.stats /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/BACs/BACs.ctgs.fasta.lengths.stats  ...
+
+1: n=965 [201, 25427] 2664.6 +/- 3384.5 sum=2571349 n50=5344 n50cnt=137 f=6959.02
+
+1: n=2238 [200, 72061] 763.3 +/- 4131.8 sum=1708370 n50=12703 n50cnt=25 f=23117.99
+
+----------------------------------------
+
+
+
+
+---- Merging BACs and Scaffolds ==> QBACs.Scaffolds
+
+---------- Run bash command ----------
+
+Create /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/Metassembly/QBACs.Scaffolds:
+mkdir /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/Metassembly/QBACs.Scaffolds  ...
+
+----------------------------------------
+
+
+---------- Run bash command ----------
+
+nucmer /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/Scaffolds/Scaffolds.fa /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/BACs/BACs.fa:
+nucmer --maxmatch -l 50 -c 300 -p /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/Metassembly/QBACs.Scaffolds/QBACs.Scaffolds /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/Scaffolds/Scaffolds.fa /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/BACs/BACs.fa  ...
+
+----------------------------------------
+
+
+---------- Run bash command ----------
+
+delta-filter /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/Metassembly/QBACs.Scaffolds/QBACs.Scaffolds.delta:
+delta-filter -1 /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/Metassembly/QBACs.Scaffolds/QBACs.Scaffolds.delta  ...
+
+----------------------------------------
+
+
+---------- Run bash command ----------
+
+show-coords /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/Metassembly/QBACs.Scaffolds/QBACs.Scaffolds.1delta:
+show-coords -cHlTr /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/Metassembly/QBACs.Scaffolds/QBACs.Scaffolds.1delta  ...
+
+----------------------------------------
+
+
+---------- Run bash command ----------
+
+asseMerge :
+/home/planz/Downloads/Metassembler/bin/asseMerge -R /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/Scaffolds/CEstat/Scaffolds.ce/Scaffolds.mateAn -r /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/Scaffolds/Scaffolds.fa.Ns -Q /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/BACs/CEstat/BACs.ce/BACs.mateAn -q /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/BACs/BACs.fa.Ns -D /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/Metassembly/QBACs.Scaffolds/QBACs.Scaffolds.delta -M /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/Metassembly/QBACs.Scaffolds/QBACs.Scaffolds.1coords -O /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/Metassembly/QBACs.Scaffolds/M1/QBACs.Scaffolds -x QBACs.Scaffolds -c 15 -L 20 -p 0.65 -z 3 -d 2 -i 13 -s 0 -e 200 -l 60 -a 60 -t 50  ...
+
+----------------------------------------
+
+
+---------- Run bash command ----------
+
+meta2fasta:
+/home/planz/Downloads/Metassembler/bin/meta2fasta --out /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/Metassembly/QBACs.Scaffolds/M1/QBACs.Scaffolds --meta /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/Metassembly/QBACs.Scaffolds/M1/QBACs.Scaffolds.metassem --fastas /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/Scaffolds/Scaffolds.fa /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/BACs/BACs.fa --delta /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/Metassembly/QBACs.Scaffolds/QBACs.Scaffolds.delta --1delta /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/Metassembly/QBACs.Scaffolds/QBACs.Scaffolds.1delta --keepUnaligned 0 --sizeUnaligned 0 0 --keepDF 0 --sizeDF 0 0  ...
+
+----------------------------------------
+
+
+---------- Run bash command ----------
+
+Ncoords:
+/home/planz/Downloads/Metassembler/bin/Ncoords -N /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/Metassembly/QBACs.Scaffolds/M1/QBACs.Scaffolds.fasta -D /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/Metassembly/QBACs.Scaffolds/M1/  ...
+
+----------------------------------------
+
+
+---------- Run bash command ----------
+
+seqLengths:
+/home/planz/Downloads/Metassembler/bin/seqLengths /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/Metassembly/QBACs.Scaffolds/M1/QBACs.Scaffolds.fasta  ...
+
+----------------------------------------
+
+
+---------- Run bash command ----------
+
+cut seqLengths:
+cut -f 2 /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/Metassembly/QBACs.Scaffolds/M1/QBACs.Scaffolds.fasta.lengths  ...
+
+----------------------------------------
+
+
+---------- Run bash command ----------
+
+stats:
+/home/planz/Downloads/Metassembler/bin/stats /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/Metassembly/QBACs.Scaffolds/M1/QBACs.Scaffolds.fasta.lengths.2  ...
+
+----------------------------------------
+
+
+---------- Run bash command ----------
+
+Get contigs:
+/home/planz/Downloads/Metassembler/bin/splitscafffa /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/Metassembly/QBACs.Scaffolds/M1/QBACs.Scaffolds.fasta  ...
+
+Processed 6 scaffolds and 660 contigs, printed 557 at least 200 bp long
+----------------------------------------
+
+
+---------- Run bash command ----------
+
+seqLengths:
+/home/planz/Downloads/Metassembler/bin/seqLengths /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/Metassembly/QBACs.Scaffolds/M1/QBACs.Scaffolds.ctgs.fasta  ...
+
+----------------------------------------
+
+
+---------- Run bash command ----------
+
+cut seqLengths:
+cut -f 2 /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/Metassembly/QBACs.Scaffolds/M1/QBACs.Scaffolds.ctgs.fasta.lengths  ...
+
+----------------------------------------
+
+
+---------- Run bash command ----------
+
+stats:
+/home/planz/Downloads/Metassembler/bin/stats /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/Metassembly/QBACs.Scaffolds/M1/QBACs.Scaffolds.ctgs.fasta.lengths.2  ...
+
+----------------------------------------
+
+-- Computing CE-stat for QBACs.Scaffolds
+
+---------- Run bash command ----------
+
+bowtie2-build:
+bowtie2-build /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/Metassembly/QBACs.Scaffolds/M1/QBACs.Scaffolds.fasta /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/Metassembly/QBACs.Scaffolds/M1/CEstat/BWTaln/QBACs.Scaffolds.bld  ...
+
+----------------------------------------
+
+
+---------- Run bash command ----------
+
+bowtie2:
+bowtie2 -x /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/Metassembly/QBACs.Scaffolds/M1/CEstat/BWTaln/QBACs.Scaffolds.bld -1 /media/planz/Hs1-2/Beet_translocation/UnorderedDataSet/Mate_pair_5kb_TR520/B1926_NoIndex_L006_R1_001.fastq.gz -2 /media/planz/Hs1-2/Beet_translocation/UnorderedDataSet/Mate_pair_5kb_TR520/B1926_NoIndex_L006_R2_001.fastq.gz --maxins 6000 --minins 3000 --rf --threads 18  ...
+
+----------------------------------------
+
+
+---------- Run bash command ----------
+
+mateAn -a sam:
+/home/planz/Downloads/Metassembler/bin/mateAn -A 2500 -B 6000 -p /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/Metassembly/QBACs.Scaffolds/M1/CEstat/QBACs.Scaffolds.ce/QBACs.Scaffolds -e 0 -z 3 -q 20 -N 1 -f 6 -c 0.05 -n 30 -a /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/Metassembly/QBACs.Scaffolds/M1/CEstat/BWTaln/QBACs.Scaffolds.mtp.sam  ...
+
+----------------------------------------
+
+
+---------- Run bash command ----------
+
+gzip /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/Metassembly/QBACs.Scaffolds/M1/CEstat/QBACs.Scaffolds.ce/QBACs.Scaffolds.sort.bedpe.sort.bedpe file:
+gzip -q -f /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/Metassembly/QBACs.Scaffolds/M1/CEstat/QBACs.Scaffolds.ce/QBACs.Scaffolds.sort.bedpe  ...
+
+----------------------------------------
+
+
+---------- Run bash command ----------
+
+convert sam to bam:
+samtools view -Sb /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/Metassembly/QBACs.Scaffolds/M1/CEstat/BWTaln/QBACs.Scaffolds.mtp.sam  ...
+
+----------------------------------------
+
+
+---------- Run bash command ----------
+
+reportCE:
+/home/planz/Downloads/Metassembler/bin/reportCE -P /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/Metassembly/QBACs.Scaffolds/M1/QBACs.Scaffolds.BKPs -P /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/Metassembly/QBACs.Scaffolds/M1/QBACs.Scaffolds.LNs -P /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/Metassembly/QBACs.Scaffolds/M1/QBACs.Scaffolds.N1s -P /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/Metassembly/QBACs.Scaffolds/M1/QBACs.Scaffolds.NAs -P /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/Metassembly/QBACs.Scaffolds/M1/QBACs.Scaffolds.NBs -P /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/Metassembly/QBACs.Scaffolds/M1/QBACs.Scaffolds.NCs -P /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/Metassembly/QBACs.Scaffolds/M1/QBACs.Scaffolds.QIs -C /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/Metassembly/QBACs.Scaffolds/M1/CEstat/QBACs.Scaffolds.ce/QBACs.Scaffolds.mateAn  ...
+
+---- Loading /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/Metassembly/QBACs.Scaffolds/M1/CEstat/QBACs.Scaffolds.ce/QBACs.Scaffolds.mateAn
+---------------------------------
+----------------------------------------
+
+
+---------- Run bash command ----------
+
+meta ctg stats:
+/home/planz/Downloads/Metassembler/bin/RepStats /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/Metassembly/BACs.Scaffolds_metaCtgStats /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/Scaffolds/Scaffolds.ctgs.fasta.lengths.stats /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/Metassembly/QBACs.Scaffolds/M1/QBACs.Scaffolds.ctgs.fasta.lengths.stats  ...
+
+1: n=965 [201, 25427] 2664.6 +/- 3384.5 sum=2571349 n50=5344 n50cnt=137 f=6959.02
+
+1: n=557 [202, 25427] 2823.2 +/- 3483.0 sum=1572505 n50=5082 n50cnt=84 f=7112.43
+
+----------------------------------------
+
+
+---------- Run bash command ----------
+
+meta scf stats:
+/home/planz/Downloads/Metassembler/bin/RepStats /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/Metassembly/BACs.Scaffolds_metaScfStats /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/Scaffolds/Scaffolds.fa.lengths.stats /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/Metassembly/QBACs.Scaffolds/M1/QBACs.Scaffolds.fasta.lengths.stats  ...
+
+1: n=14 [4756, 505473] 208166.6 +/- 160034.9 sum=2914332 n50=333561 n50cnt=4 f=322410.67
+
+1: n=6 [115229, 505473] 292727.8 +/- 171543.0 sum=1756367 n50=470408 n50cnt=2 f=376500.16
+
+----------------------------------------
+
+
+---------- Run bash command ----------
+
+meta merge stats:
+/home/planz/Downloads/Metassembler/bin/RepMetassem /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/Metassembly/BACs.Scaffolds_metaMergeStats /media/planz/Hs1-2/Beet_translocation/ProperDataSet/TRregion520/SPADES/Metassembly/QBACs.Scaffolds/M1/QBACs.Scaffolds.report  ...
+
+----------------------------------------

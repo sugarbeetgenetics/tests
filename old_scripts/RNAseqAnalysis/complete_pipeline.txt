@@ -1,0 +1,86 @@
+-------------------------------------------------------------------------------------- Screen commands 
+......................................................................................................................................... To start a named screen session: 
+screen -S session_name NOTE: You can replace session_name with any other meaningful name It is a good practice to set session_name in such a way that it reflects the work 
+being done on that particular screen session. Once you run above command, it will take you directly inside the screen session. Screen session will behave as a normal linux 
+terminal. From inside the session- you either need to come out of the session or need to completely get rid of the session. To come out of the session (also called as 
+detach session): Press Ctrl+a+d To completely close the session Type exit Kill the session forever Press Ctrl+d From outside the sessio you can check all the screen 
+sessions running by typing screen -ls Output should look like this [avneesh.kumar@ceres avneesh]$ screen -ls There are screens on:
+        19339.test2 (Attached)
+        18862.test1 (Detached)
+        16060.pts-57.ceres (Detached) 3 Sockets in /var/run/screen/S-avneesh.kumar. In this case there are three screen sessions- test1, test2 and pts-57.ceres. Session for 
+test2 is still attached, other are detached. Irrespective of Attached/Detached, whatever you ran in the session will continue to run. Good practice is to open a session, 
+run a command, and detach it. In this way it will run in the background. Now, if you detach form session, you also need to re-attach to the same session. This can be done 
+by typing screen -r session_name in this case it will be screen -r test1 -------------------------------------------------------------------------------------- 
+******************************************************************************************************************* 
+-------------------------------------------------------------------------------------- BBDUK 
+......................................................................................................................................... IMPORTANT: before you start 
+working with Geany set line ending to Unix(LF) type, otherwise it takes default which is Windows(CRLF). Follow these steps: Open Geany ---> Edit ---> Preferences ---> Files 
+---> Set "Default end of line characters" to "Unix (LF)" in drop down menu ---> click Apply ---> Click OK
+#start screen session
+screen -S bbduk mkdir ./bbduk_out
+#make list of file base names and save it into file using next command:
+cd /data/nalam/SBA_Rawdata ls | awk -F"\t" '{split($1,a,"_"); print a[1]"_"a[2]}' | sort | uniq > base_names.txt
+#bbduk command
+for file in $(cat base_names.txt); do /home/akumar/softwares/bbtools/bbmap/bbduk.sh -Xmx20g in1=${file}_1.fq.gz in2=${file}_2.fq.gz out1=./bbduk_out/${file}_trimmed_1.fq 
+out2=./bbduk_out/${file}_trimmed_2.fq ref=/home/akumar/softwares/bbtools/bbmap/resources/adapters.fa k=23 hdist=1 ktrim=r trimq=6 mink=11 maq=10 minlen=100 tpe tbo; done
+#come out of the screen by pressing Ctrl+a+d
+Mapping to reference genome STAR installation is already done. Lines below are just FYI. Install RNAseq mapping tool. In our case we will be using STAR RNA-seq aligner 
+https://github.com/alexdobin/STAR/blob/master/doc/STARmanual.pdf wget https://github.com/alexdobin/STAR/archive/2.7.9a.tar.gz tar -xzf 2.7.9a.tar.gz cd STAR-2.7.9a Create 
+new directory for mapping mkdir SBA_2020_mapping cd SBA_2020_mapping Download reference genome mkdir ref_genome cd ref_genome wget --no-check-certificate 
+https://bipaa.genouest.org/sp/aphis_glycines/download/genome/v6.0_Ag_bt1/SBAphid_ref_genome_v6.fna wget --no-check-certificate 
+https://bipaa.genouest.org/sp/aphis_glycines/download/annotation/v6.0_Ag_bt1/OGS6.0_20180125.gff3 cd ../ STAR mapping commands First we have to index the genome: cd 
+/data/nalam/SBA2020/SBA2020_mapping mkdir STAR_genome STAR --runThreadN 10 --runMode genomeGenerate --genomeDir STAR_genome --genomeFastaFiles 
+ref_genome/SBAphid_ref_genome_v6.fna --sjdbGTFfile ref_genome/OGS6.0_20180125.gff3 --sjdbOverhang 99 --sjdbGTFtagExonParentTranscript Parent Mapping reads to the genome: 
+for file in $(cat /data/nalam/SBA2020/rawdata/base_names.txt); do STAR --genomeDir /data/nalam/SBA2020/SBA2020_mapping/STAR_genome/ --runThreadN 10 --readFilesIn 
+/data/nalam/SBA2020/rawdata/bbduk_out/${file}_trimmed_1.fq /data/nalam/SBA2020/rawdata/bbduk_out/${file}_trimmed_2.fq --outFileNamePrefix 
+/data/nalam/SBA2020/SBA2020_mapping/${file}_STAR_SBA_2020_ --outSAMtype BAM SortedByCoordinate --outSAMunmapped Within --outSAMattributes Standard --outSAMstrandField 
+intronMotif --outFilterIntronMotifs RemoveNoncanonical; done HTSeq - Read counts per type (exon) First we need to index bam files for file in *.out.bam; do samtools index 
+$file; done I created new directory called htseq in this new directory, run htseq on every bam file using below command *Run these two commands simultaneously in two 
+different screen sessions 1. For WB files for file in ../*WB_STAR_SBA_2020_Aligned.sortedByCoord.out.bam; do htseq-count --format bam --order pos --stranded no --type exon 
+--idattr Parent $file ../ref_genome/OGS6.0_20180125.gff3 > ${file}.htseq_count.txt; mv ${file}.htseq_count.txt ./ ; done 2. For WB files for file in 
+../*BC_STAR_SBA_2020_Aligned.sortedByCoord.out.bam; do htseq-count --format bam --order pos --stranded no --type exon --idattr Parent $file 
+../ref_genome/OGS6.0_20180125.gff3 > ${file}.htseq_count.txt; mv ${file}.htseq_count.txt ./ ; done DESeq2 for HTSeq Cufflinks Pipeline mapping -> cufflinks (to assemble 
+transcripts) -> cuffmerge (to merge transcripts to a comprehensive transcriptome) -> cuffquant and cuffdiff (to check for differential expression under different 
+conditions) mapping - Done cufflinks: cd /data/nalam/SBA2020/SBA2020_mapping mkdir cufflinks; cd cufflinks for sample in $(cat list_all_bam.txt); do mkdir 
+/data/nalam/SBA2020/SBA2020_mapping/cufflinks/${sample}; cufflinks --num-threads 14 --output-dir /data/nalam/SBA2020/SBA2020_mapping/cufflinks/${sample} 
+/data/nalam/SBA2020/SBA2020_mapping/${sample}_STAR_SBA_2020_Aligned.sortedByCoord.out.bam; done *copy the complete path of transcripts.gtf for samples to a simple text file 
+called all_assembled_transcripts.txt (using geany) cuffmerge: cd /data/nalam/SBA2020/SBA2020_mapping/cufflinks mkdir cuffmerge; cd cuffmerge cuffmerge -g 
+/data/nalam/SBA2020/SBA2020_mapping/ref_genome/OGS6.0_20180125.gff3 --ref-sequence /data/nalam/SBA2020/SBA2020_mapping/ref_genome/SBAphid_ref_genome_v6.fna --num-threads 10 
+all_assembled_transcripts.txt cuffquant: cd /data/nalam/SBA2020/SBA2020_mapping/cufflinks mkdir cuffquant; cd cuffquant for file in 
+/data/nalam/SBA2020/SBA2020_mapping/*STAR_SBA_2020_Aligned.sortedByCoord.out.bam; do cuffquant --num-threads 10 --output-dir /data/nalam/SBA2020/SBA2020_mapping/cuffquant 
+/data/nalam/SBA2020/SBA2020_mapping/cufflinks/cuffmerge/merged.gtf ${file}; done cuffdiff: cd /data/nalam/SBA2020/SBA2020_mapping/cufflinks mkdir cuffdiff; cd cuffdiff 
+*cxb_file_S1_BC,cxb_file_S2_BC,cxb_file_S3_BC cxb_file_S1_WB,cxb_file_S2_WB,cxb_file_S3_WB names should be replaced with files coming from cuffquant for each bam file we 
+input cuffdiff --num-threads 10 --label BC,WB --frag-bias-correct --output-dir /data/nalam/SBA2020/SBA2020_mapping/cufflinks/cuffdiff -b 
+/data/nalam/SBA2020/SBA2020_mapping/ref_genome/SBAphid_ref_genome_v6.fna -u /data/nalam/SBA2020/SBA2020_mapping/cufflinks/cuffmerge/merged.gtf 
+/data/nalam/SBA2020/SBA2020_mapping/cuffquant/cxb_file_S1_BC.cxb,/data/nalam/SBA2020/SBA2020_mapping/cuffquant/cxb_file_S2_BC.cxb,/data/nalam/SBA2020/SBA2020_mapping/cuffquant/cxb_file_S3_BC.cxb 
+/data/nalam/SBA2020/SBA2020_mapping/cuffquant/cxb_file_S1_WB.cxb,/data/nalam/SBA2020/SBA2020_mapping/cuffquant/cxb_file_S2_WB.cxb,/data/nalam/SBA2020/SBA2020_mapping/cuffquant/cxb_file_S3_WB.cxb 
+image.png DESeq2 based on https://bioconductor.org/packages/devel/bioc/vignettes/DESeq2/inst/doc/DESeq2.html#htseq
+if (!requireNamespace("BiocManager", quietly = TRUE))
+  install.packages("BiocManager")
+
+BiocManager::install("DESeq2")
+BiocManager::install("apeglm")
+BiocManager::install("ReportingTools")
+
+
+directory <- "C:/Users/avnee/OneDrive - Colostate/Collaborations/VAMSI/htseq"
+sampleFiles <- grep("([BW][BC])", list.files(directory), value= TRUE)
+sampleTable <- data.frame(sampleName = sampleFiles, filename = sampleFiles, condition = c("BC","WB"))
+sampleTable$condition <- factor(sampleTable$condition)
+
+library("DESeq2")
+ddsHTSeq <- DESeqDataSetFromHTSeqCount(sampleTable = sampleTable,
+                                       directory = directory,
+                                       design= ~ condition) ddsHTSeq dds <- DESeq(ddsHTSeq) res <- results(dds) res summary(res$log2FoldChange) summary(res$pvalue) 
+plotMA(res, ylim=c(-2,2))
+#shrinking Log Fold Change
+resultsNames(dds) resLFC <- lfcShrink(dds, coef="condition_WB_vs_BC", type="apeglm") plotMA(resLFC, ylim=c(-2,2))
+#identify particular set of gene based on above plot run below command and then click on points of interest in the plot once done with clicking the points, press Esc
+idx <- identify(res$baseMean, res$log2FoldChange)
+#run below command to identify gene names of the above selected individuals
+rownames(res)[idx]
+#gene or set of gene specific plot of normalized counts by replacing "gene-name with actual gene name"
+plotCounts(dds, gene="gene_name", intgroup="condition")
+#Information about which variables and tests were used can be found by calling the function mcols on the results object.
+mcols(res)$description write.csv(as.data.frame(res),
+          file="condition_treated_results.csv")

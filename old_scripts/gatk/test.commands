@@ -1,0 +1,10 @@
+python3 /media/pflanz/Hs1-2/Scripts/gatk/snp_filtering.py P1
+python3 /media/pflanz/Hs1-2/Scripts/gatk/snp_filtering.py P2
+python3 /media/pflanz/Hs1-2/Scripts/gatk/snp_filtering.py P3
+python3 /media/pflanz/Hs1-2/Scripts/gatk/snp_filtering.py P4
+python3 /media/pflanz/Hs1-2/Scripts/gatk/snp_filtering.py P5
+python3 /media/pflanz/Hs1-2/Scripts/gatk/snp_filtering.py P6
+python3 /media/pflanz/Hs1-2/Scripts/gatk/snp_filtering.py P7
+python3 /media/pflanz/Hs1-2/Scripts/gatk/snp_filtering.py P8
+python3 /media/pflanz/Hs1-2/Scripts/gatk/snp_filtering.py P9
+python3 /media/pflanz/Hs1-2/Scripts/gatk/snp_filtering.py P10
